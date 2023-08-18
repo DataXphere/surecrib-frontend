@@ -13,8 +13,9 @@ module.exports = {
     extend: {
       backgroundImage: {
         'hero': 'linear-gradient(180deg, #FFF 0%, #1A6177 100%)',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'house':
+          'linear-gradient(180deg, #1A6177 0.11%, #263E7A 99.64%)',
+          'featuresA': 'linear-gradient(180deg, #1A6177 0%, #25356A 98.75%)',
       },
     },
   },
