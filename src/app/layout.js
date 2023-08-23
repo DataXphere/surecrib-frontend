@@ -1,14 +1,15 @@
-import './globals.css'
-import { Inter, Permanent_Marker } from 'next/font/google'
-import Nav from '@/components/Nav'
+import "./globals.css";
+import { Inter } from "next/font/google";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 
-const inter = Inter({ subsets: ['latin'] })
-// const permanent = Permanent_Marker({ subsets: ['latin'] }, { weight: '400' })
+const inter = Inter({ subsets: ["latin"] });
+// const permanent = Permanent_Marker({ subsets: ["latin"] });
 
 export const metadata = {
-  title: 'SureCrib',
+  title: "SureCrib",
   description: `Student's Housefinder`,
-}
+};
 
 export default function RootLayout({ children }) {
   return (
@@ -16,7 +17,8 @@ export default function RootLayout({ children }) {
       <body className={inter.className} suppressHydrationWarning={true}>
         <Nav></Nav>
         {children}
-        </body>
+        <Footer />
+      </body>
     </html>
-  )
+  );
 }
