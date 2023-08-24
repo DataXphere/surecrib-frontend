@@ -125,7 +125,7 @@ const Contact = () => {
             </div>
           </div>
           <div className="flex flex-col p-8 bg-white w-[40%] text-center ">
-            <h3 className="text-[2rem] text-[#1A6177] font-bold ">
+            <h3 className="text-[2rem] text-[#1A6177] font-bold pb-4 ">
               Any Question?
             </h3>
             <form className="flex flex-col gap-y-4 ">
