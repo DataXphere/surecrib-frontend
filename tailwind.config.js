@@ -16,7 +16,11 @@ module.exports = {
         'house':
           'linear-gradient(180deg, #1A6177 0.11%, #263E7A 99.64%)',
           'featuresA': 'linear-gradient(180deg, #1A6177 0%, #25356A 98.75%)',
+          'fill': 'linear-gradient(180deg, #1A6177 0%, rgba(217, 217, 217, 0.00) 100%)',
       },
+      // colors: {
+      //   "fill": "linear-gradient(180deg, #1A6177 0%, rgba(217, 217, 217, 0.00) 100%)",
+      // }
     },
   },
   plugins: [],

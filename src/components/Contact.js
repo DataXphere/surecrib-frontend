@@ -142,7 +142,7 @@ const Contact = () => {
                   rows={7}
                   name="message"
                   placeholder="enter your question here"
-                  className="pl-6 py-4 text-[#575757] bg-[#D0D0D0] py-4 text-black outline-none border-2 font-medium"
+                  className="pl-6  text-[#575757] bg-[#D0D0D0] py-4  outline-none border-2 font-medium"
                 />
               </label>
 
