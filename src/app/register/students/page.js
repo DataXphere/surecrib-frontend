@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage, useFormik } from "formik";
 import * as Yup from "yup";
 import Link from "next/link";
@@ -14,18 +14,46 @@ const StudentRegister = () => {
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
       .required("Password is required"),
-    name: Yup.string().required("Name is required"),
+    firstName: Yup.string().required("First Name is required"),
+    lastName: Yup.string().required("Last Name is required"),
+    agreeTerms: Yup.boolean().oneOf(
+      [true],
+      "You have to agree to terms and conditions"
+    ),
   });
 
   const initialValues = {
-    name: "",
     email: "",
     password: "",
+    firstName: "",
+    lastName: "",
+    role: "Student",
+    gender: "Male",
   };
+  const [loading, setLoading] = useState(false);
+  const handleSubmit = async (values) => {
+    setLoading(true);
+    try {
+      const response = await fetch("https://surecrib.onrender.com/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
 
-  const handleSubmit = (values) => {
-    // Handle form submission logic here
-    console.log(values);
+      if (response.ok) {
+        console.log("Signup successful");
+      } else {
+        console.error("Signup failed");
+      }
+      setLoading(false);
+    } catch (error) {
+      console.error("Error:", error);
+      setLoading(false);
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -43,27 +71,44 @@ const StudentRegister = () => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}>
             <Form className="flex flex-col w-full px-4 text-[#757575]">
-              <div className="flex flex-col border p-4 my-4">
-                <label htmlFor="password">Full name:</label>
+              <div className="flex flex-col border p-4 my-4 gap-y-2">
+                <label htmlFor="password">First name:</label>
                 <Field
                   type="text"
-                  id="name"
-                  name="name"
-                  placeholder="John Doe"
+                  id="firstName"
+                  name="firstName"
+                  placeholder="John"
+                  className="p-2 focus:outline-none"
                 />
               </div>
               <ErrorMessage
-                name="name"
+                name="firstName"
                 component="div"
                 style={{ color: "red", fontSize: "10px" }}
               />
-              <div className="flex flex-col border p-4 my-4">
+              <div className="flex flex-col border p-4 my-4 gap-y-2">
+                <label htmlFor="password">Last name:</label>
+                <Field
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  placeholder="Doe"
+                  className="p-2 focus:outline-none"
+                />
+              </div>
+              <ErrorMessage
+                name="lastName"
+                component="div"
+                style={{ color: "red", fontSize: "10px" }}
+              />
+              <div className="flex flex-col border p-4 my-4 gap-y-2">
                 <label htmlFor="email">Email Address:</label>
                 <Field
                   type="email"
                   id="email"
                   name="email"
                   placeholder="johndoe@example.com"
+                  className="p-2 focus:outline-none"
                 />
               </div>
               <ErrorMessage
@@ -71,13 +116,14 @@ const StudentRegister = () => {
                 component="div"
                 style={{ color: "red", fontSize: "10px" }}
               />
-              <div className="flex flex-col border p-4 my-4">
+              <div className="flex flex-col border p-4 my-4 gap-y-2">
                 <label htmlFor="password">Password:</label>
                 <Field
                   type="password"
                   id="password"
                   name="password"
                   placeholder="**********"
+                  className="p-2 focus:outline-none"
                 />
               </div>
               <ErrorMessage
@@ -90,16 +136,22 @@ const StudentRegister = () => {
                 <label>
                   <Field
                     type="checkbox"
-                    name="rememberMe"
+                    name="agreeTerms"
                     style={{ marginRight: "8px" }}
+                    checked = {true}
                   />
                   I agree to the Terms of Service and Privacy Policy
                 </label>
               </div>
+              <ErrorMessage
+                name="agreeTerms"
+                component="div"
+                style={{ color: "red", fontSize: "10px" }}
+              />
               <button
                 type="submit"
-                className="py-4 px-8 w-full self-center bg-[#1A6177] text-white font-bold my-6 uppercase">
-                Create an account
+                className={`${loading ? "cursor-not-allowed bg-gray-500" : ""} py-4 px-8 w-full self-center bg-[#1A6177] text-white font-bold my-6 uppercase`}>
+                {loading ? "Processing..." : "Create an Account"}
               </button>
             </Form>
           </Formik>

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage, useFormik } from "formik";
 import * as Yup from "yup";
 import Link from "next/link";
@@ -12,7 +12,6 @@ const StudentLogin = () => {
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Email is required"),
     password: Yup.string()
-      .min(8, "Password must be at least 8 characters")
       .required("Password is required"),
   });
 
@@ -20,10 +19,31 @@ const StudentLogin = () => {
     email: "",
     password: "",
   };
+  const [loading, setLoading] = useState(false);
+  const handleSubmit = async (values) => {
+     setLoading(true);
+    try {
+      const response = await fetch("https://surecrib.onrender.com/api/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
 
-  const handleSubmit = (values) => {
-    // Handle form submission logic here
-    console.log(values);
+      if (response.ok) {
+        console.log("Signin successful");
+        console.log(response.token)
+      } else {
+        console.error("Signin failed");
+      }
+      setLoading(false);
+    } catch (error) {
+      console.error("Error:", error);
+      setLoading(false);
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -83,8 +103,8 @@ const StudentLogin = () => {
               </div>
               <button
                 type="submit"
-                className="py-4 px-8 w-full self-center bg-[#1A6177] text-white font-bold my-6 uppercase">
-                Proceed
+                className={`${loading ? "cursor-not-allowed bg-gray-500" : ""} py-4 px-8 w-full self-center bg-[#1A6177] text-white font-bold my-6 uppercase`}>
+                {loading ? "Processing..." : "Log In"}
               </button>
             </Form>
           </Formik>
