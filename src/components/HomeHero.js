@@ -12,9 +12,9 @@ const HomeHero = () => {
           </h2>
           <p className="text-justify text-[1.5rem] w-[40rem] ml-14">
             We offer an exceptional living experience that combines modern
-            comfort, convenience, and community. Whether you're looking for a
+            comfort, convenience, and community. Whether you are looking for a
             cozy studio or a spacious shared apartment, we have the perfect home
-            for you. Explore our vibrant community and discover a place you'll
+            for you. Explore our vibrant community and discover a place you will
             love to call home.
           </p>
           <div className="flex bg-white p-4 mt-10 justify-between items-center w-[42rem] m-auto rounded-md">
