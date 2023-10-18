@@ -48,7 +48,7 @@ const ActivateAccount = () => {
     };
 
     activateAccount();
-  }, [token]);
+  }, [token,onOpen]);
 
   return (
     <>
