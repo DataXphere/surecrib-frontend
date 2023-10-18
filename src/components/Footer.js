@@ -6,7 +6,7 @@ import logo from "/public/assets/SureCrib.png";
 const Footer = () => {
   return (
     <>
-      <section className=" border bg-white shadow-lg bottom-0">
+      <section className=" border bg-white shadow-lg bottom-0 w-full">
         <div className="w-[90%] mx-auto flex justify-between items-center sticky z-50 font-bold text-black h-[100px]">
           <Image src={logo} alt="SureCrib Logo" width={100} height={100} />
           <div className="w-4/5 flex justify-end justify-self-end gap-10 uppercase">

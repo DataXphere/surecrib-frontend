@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "/public/assets/SureCrib.png";
+import { Menu, MenuButton, MenuItem, Button, MenuList } from "@chakra-ui/react";
 
 const Nav = () => {
   return (
@@ -22,16 +23,39 @@ const Nav = () => {
             <Link href="#" className="p-3 hover:bg-[#80d0e9] hover:rounded-xl">
               About Us
             </Link>
-            <Link
-              href="/register/students"
-              className="p-3 hover:bg-[#80d0e9] hover:rounded-xl">
-              Register
-            </Link>
-            <Link
-              href="/login/students"
-              className="p-3 bg-[#1A6177] rounded-bl-[25px] rounded-tr-[25px] text-white">
-              Log In
-            </Link>
+            <div className="flex justify-between items-center gap-x-8">
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  className="py-4 hover:bg-[#80d0e9] hover:rounded-xl font-extrabold uppercase text-black">
+                  Register
+                </MenuButton>
+                <MenuList className="mt-6">
+                  <MenuItem>
+                    <Link href="/students/register">Register as Student</Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link href="/owners/register">Register as Owner</Link>
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  className="font-extrabold uppercase p-3 bg-[#1A6177] rounded-bl-[25px] rounded-tr-[25px] text-white">
+                  Login
+                </MenuButton>
+                <MenuList className="mt-6">
+                  <MenuItem>
+                    <Link href="/students/login">Login as Student</Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link href="/owners/login">Login as Owner</Link>
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </div>
           </div>
         </div>
       </section>

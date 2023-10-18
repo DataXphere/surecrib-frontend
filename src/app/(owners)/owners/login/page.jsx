@@ -1,18 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage, useFormik } from "formik";
 import * as Yup from "yup";
 import Link from "next/link";
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
-import { BsTwitter } from "react-icons/bs";
+// import { FcGoogle } from "react-icons/fc";
+// import { FaFacebook } from "react-icons/fa";
+// import { BsTwitter } from "react-icons/bs";
+import { useRouter } from "next/navigation";
+import { OwnerContext } from "@/context/ownerContext";
 
-const StudentLogin = () => {
+const OwnerLogin = () => {
+  const router = useRouter();
+  const { setOwnerAndTokenData } = useContext(OwnerContext);
+  const [message, setMessage] = useState("");
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Email is required"),
-    password: Yup.string()
-      .required("Password is required"),
+    password: Yup.string().required("Password is required"),
   });
 
   const initialValues = {
@@ -21,21 +25,21 @@ const StudentLogin = () => {
   };
   const [loading, setLoading] = useState(false);
   const handleSubmit = async (values) => {
-     setLoading(true);
+    setLoading(true);
     try {
-      const response = await fetch("https://surecrib.onrender.com/api/signin", {
+      const response = await fetch("https://surecrib.onrender.com/api/owners/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
       });
-
+      const data = await response.json();
       if (response.ok) {
-        console.log("Signin successful");
-        console.log(response.token)
+        setOwnerAndTokenData(data.user, data.token);
+        router.push("/owners/dashboard");
       } else {
-        console.error("Signin failed");
+        setMessage(data.message);
       }
       setLoading(false);
     } catch (error) {
@@ -48,13 +52,13 @@ const StudentLogin = () => {
 
   return (
     <>
-      <section className="bg-fill flex items-center">
+      <section className="bg-fill flex items-center mb-40">
         <div className="w-[50%] m-auto bg-white p-12 border my-12 flex flex-col items-center">
           <h2 className="text-[#212121] text-[2rem] font-bold">
             Login to SureCrib
           </h2>
           <p className="text-[#757575]">
-            Quick and simple way to find and rent accomodation
+            Quick and simple way to find good tenants
           </p>
           <Formik
             initialValues={initialValues}
@@ -103,13 +107,22 @@ const StudentLogin = () => {
               </div>
               <button
                 type="submit"
-                className={`${loading ? "cursor-not-allowed bg-gray-500" : ""} py-4 px-8 w-full self-center bg-[#1A6177] text-white font-bold my-6 uppercase`}>
+                className={`${
+                  loading ? "cursor-not-allowed bg-gray-500" : ""
+                } py-4 px-8 w-full self-center bg-[#1A6177] text-white font-bold my-6 uppercase`}>
                 {loading ? "Processing..." : "Log In"}
               </button>
+
+              {message && (
+              <div className=" text-red-700 px-4 py-3 rounded relative font-bold">
+                {message}
+              </div>
+            )}
             </Form>
+            
           </Formik>
 
-          <p className="text-[#757575] uppercase">Or use</p>
+          {/* <p className="text-[#757575] uppercase">Or use</p>
           <div className="flex items-center gap-x-8 mt-6">
             <button className="bg-gray-100 p-2 rounded-xl">
               <FcGoogle size={35} />
@@ -120,11 +133,11 @@ const StudentLogin = () => {
             <button className="bg-gray-100 p-2 rounded-xl">
               <FaFacebook size={35} />
             </button>
-          </div>
+          </div> */}
         </div>
       </section>
     </>
   );
 };
 
-export default StudentLogin;
+export default OwnerLogin;
