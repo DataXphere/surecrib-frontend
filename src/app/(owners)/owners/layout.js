@@ -3,8 +3,8 @@
 import Cookies from "universal-cookie";
 import { OwnerProvider } from "@/context/ownerContext";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect} from "react";
-
+import { useEffect } from "react";
+// import Sidebar from "./dashboard/Sidebar";
 
 export default function Layout({ children }) {
   const cookies = new Cookies();
@@ -21,8 +21,9 @@ export default function Layout({ children }) {
         pathName.startsWith("/owners/activate-account/");
       if (!token && !isFreePage) {
         // TO DO: redirect users to their intended page after signing in
-        // cookies.set("intendedPath", pathName, {path: "/"})
+        cookies.set("intendedPath", pathName, { path: "/" });
         router.push("/owners/login");
+        // return children;
       }
       // TO DO: verify token
       return children;
@@ -32,10 +33,9 @@ export default function Layout({ children }) {
   }, [children, token, pathName, router]);
 
   return (
-      
-        <OwnerProvider>
-            {children}
-        </OwnerProvider>
-    
+    <OwnerProvider>
+      {/* <Sidebar>Agents</Sidebar> */}
+      {children}
+    </OwnerProvider>
   );
 }
