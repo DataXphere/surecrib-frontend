@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 const OwnerActivateAccount = () => {
-  const [successful, setSuccesful] = useState(true);
+  const [successful, setSuccessful] = useState(true);
   const [loading, setLoading] = useState(false);
   const activateParams = useParams();
   const token = activateParams.token;
@@ -35,14 +35,14 @@ const OwnerActivateAccount = () => {
         if (response.ok) {
           onOpen();
           setLoading(false);
-          setSuccesful(true);
+          setSuccessful(true);
         } else {
           setLoading(false);
-          setSuccesful(false);
+          setSuccessful(false);
         }
       } catch (error) {
         setLoading(false);
-        setSuccesful(false);
+        setSuccessful(false);
         console.error(error);
       }
     };
@@ -94,7 +94,7 @@ const OwnerActivateAccount = () => {
             Oops, something went wrong! It may be that your activation link has expired or you clicked on the wrong link.
           </p>
           <Link
-            href="/students/register"
+            href="/owners/register"
             className="mt-6 text-white bg-[#1A6177] p-4 rounded-lg font-bold">
             Try again
           </Link>
